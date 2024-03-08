@@ -56,7 +56,6 @@ public class FragmentHome extends Fragment {
             binding = FragmentHomeBinding.inflate(inflater);
 //            Methods.setStatusBarColor(requireActivity().getColor(R.color.colorStatusBar), (AppCompatActivity) requireActivity());
             loadData();
-            loadUI();
             setListeners();
         }
         return binding.getRoot();
@@ -75,12 +74,25 @@ public class FragmentHome extends Fragment {
     }
 
     private void loadUI() {
+        hidePb();
         if(liveEvent != null) {
-            binding.tvEventName.setText(liveEvent.getName().toString());
+            binding.tvNoEvents.setVisibility(View.GONE);
+            binding.llLiveEvent.setVisibility(View.VISIBLE);
+            binding.tvLEName.setText(liveEvent.getName().toString());
+            binding.tvLELocation.setText(liveEvent.getLocation().toString());
+            binding.tvLETime.setText(liveEvent.getTime().toString());
+            binding.tvLEDate.setText(liveEvent.getDate().toString());
+            binding.llLiveEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context, "Event is live", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     private void loadEventDetails(String liveEventId) {
+        showPb();
         db.collection("CLEANUP_EVENTS").document(liveEventId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -89,12 +101,16 @@ public class FragmentHome extends Fragment {
                         if(task.isSuccessful()){
                             liveEvent = task.getResult().toObject(Event.class);
                             loadUI();
+                        } else {
+                            Toast.makeText(context, "Some error occurred.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hidePb();
+                        Toast.makeText(context, "Some error occurred. " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -111,5 +127,13 @@ public class FragmentHome extends Fragment {
             loadEventDetails(liveEventId);
         }
 
+    }
+
+
+    private void showPb(){
+        binding.pbHome.setVisibility(View.VISIBLE);
+    }
+    private void hidePb(){
+        binding.pbHome.setVisibility(View.GONE);
     }
 }

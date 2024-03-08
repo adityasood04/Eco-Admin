@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -105,6 +106,7 @@ public class ActivityCreateEvent extends AppCompatActivity {
 
 
     private void createEvent() {
+        showPb();
         Event event = new Event();
         event.setName(binding.etNameOfEvent.getText().toString());
         event.setDescription(binding.etDescription.getText().toString());
@@ -122,6 +124,7 @@ public class ActivityCreateEvent extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        hidePb();
                         if(task.isSuccessful()) {
                             editor.putBoolean("IS_EVENT_LIVE", true);
                             editor.putString("LIVE_EVENT_ID", event.getId());
@@ -137,6 +140,7 @@ public class ActivityCreateEvent extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hidePb();
                         Log.i("Create event", "onFailure: create event" + e.getMessage());
                         Toast.makeText(ActivityCreateEvent.this, "Some error encountered. Try again!!", Toast.LENGTH_SHORT).show();
                     }
@@ -221,5 +225,12 @@ public class ActivityCreateEvent extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, languages);
         binding.spinner.setAdapter(arrayAdapter);
         binding.spinner.setSelection(0);
+    }
+
+    private void showPb(){
+        binding.pbCreateEvent.setVisibility(View.VISIBLE);
+    }
+    private void hidePb(){
+        binding.pbCreateEvent.setVisibility(View.GONE);
     }
 }

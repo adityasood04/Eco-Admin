@@ -3,18 +3,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentHome"
-    android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp"
-    android:orientation="vertical">
+    tools:context=".fragments.FragmentHome">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="16sp"
-        android:layout_gravity="center"
-        android:id="@+id/tvEventName"/>
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Hello, name"
+        android:textColor="@color/textPrimary"
+        android:textSize="24sp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Scheduled Event :"
+            android:textColor="@color/textPrimary"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvNoEvents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="No events scheduled. Create a new one."
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/llLiveEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/bg_main"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvLEName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvLELocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvLEDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvLETime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text=""
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -24,11 +93,19 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/blue_bg"
         android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
         android:paddingVertical="8dp"
         android:text="Create Event"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbHome"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>
