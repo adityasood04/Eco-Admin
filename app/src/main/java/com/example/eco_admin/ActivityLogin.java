@@ -30,7 +30,8 @@ public class ActivityLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
 
         prefs = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE);
@@ -60,11 +61,12 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void launchSignupScreen() {
-        startActivity(new Intent(this,ActivitySignup.class));
+        startActivity(new Intent(this,ActivityRegister.class));
         finish();
     }
 
     private void loginUser() {
+        showPb();
         auth.signInWithEmailAndPassword(binding.etEmailLogin.getText().toString(),binding.etPasswordLogin.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -73,6 +75,7 @@ public class ActivityLogin extends AppCompatActivity {
                             getUserDetails(task.getResult());
                         }
                         else{
+                            hidePb();
                             Toast.makeText(ActivityLogin.this, "Login Failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -80,6 +83,7 @@ public class ActivityLogin extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hidePb();
                         Toast.makeText(ActivityLogin.this, "Login Failed."+e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
@@ -91,6 +95,7 @@ public class ActivityLogin extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        hidePb();
                         if(task.isSuccessful()){
                             NGO ngo = task.getResult().toObject(NGO.class);
                             saveLocalUser(ngo);
@@ -103,7 +108,8 @@ public class ActivityLogin extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        hidePb();
+                        Toast.makeText(ActivityLogin.this,"Error fetching user",Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -115,5 +121,11 @@ public class ActivityLogin extends AppCompatActivity {
     private void saveLocalUser(NGO ngo) {
         editor.putString("NGO", new Gson().toJson(ngo));
         editor.apply();
+    }
+    private void showPb(){
+        binding.pbLogin.setVisibility(View.VISIBLE);
+    }
+    private void hidePb(){
+        binding.pbLogin.setVisibility(View.GONE);
     }
 }

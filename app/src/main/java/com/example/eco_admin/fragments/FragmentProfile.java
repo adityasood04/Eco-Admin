@@ -1,5 +1,6 @@
 package com.example.eco_admin.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,9 +18,14 @@ import com.example.eco_admin.R;
  */
 public class FragmentProfile extends Fragment {
 
+    private Context context;
 
     public FragmentProfile() {
         // Required empty public constructor
+    }
+    public FragmentProfile(Context context) {
+        // Required empty public constructor
+        this.context = context;
     }
 
 
