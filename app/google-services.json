@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "490737959185",
+    "project_id": "eco-admin-945ed",
+    "storage_bucket": "eco-admin-945ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490737959185:android:0323db5d40ed656d828cb0",
+        "android_client_info": {
+          "package_name": "com.example.eco_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApDLWFm53bjqJYlujY4NireZUWp6SBHJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
