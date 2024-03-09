@@ -19,11 +19,13 @@ import com.example.eco_admin.ActivityLiveEvent;
 import com.example.eco_admin.R;
 import com.example.eco_admin.databinding.FragmentHomeBinding;
 import com.example.eco_admin.models.Event;
+import com.example.eco_admin.models.NGO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 public class FragmentHome extends Fragment {
 
@@ -36,6 +38,7 @@ public class FragmentHome extends Fragment {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
+    private NGO ngo;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -127,6 +130,8 @@ public class FragmentHome extends Fragment {
 //        ngo = new Gson().fromJson(context.getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE).getString("NGO", ""), NGO.class);
         db = FirebaseFirestore.getInstance();
         prefs = context.getSharedPreferences("EVENTS_PREFS", Context.MODE_PRIVATE);
+        ngo = new Gson().fromJson(context.getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE).getString("NGO", ""), NGO.class);
+
         editor = prefs.edit();
         isEventLive = prefs.getBoolean("IS_EVENT_LIVE",false);
         Log.i("adi", "loadData: " + isEventLive);
@@ -134,6 +139,7 @@ public class FragmentHome extends Fragment {
         if(liveEventId != null) {
             loadEventDetails(liveEventId);
         }
+        binding.tvOrgName.setText(ngo.getName().toString());
 
     }
 

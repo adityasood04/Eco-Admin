@@ -1,14 +1,21 @@
 package com.example.eco_admin.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.eco_admin.ActivityLogin;
 import com.example.eco_admin.R;
 import com.example.eco_admin.databinding.FragmentProfileBinding;
 import com.example.eco_admin.models.NGO;
@@ -51,7 +58,18 @@ public class FragmentProfile extends Fragment {
     }
 
     private void setListeners() {
-
+        binding.btnLogout.setOnClickListener(view -> {
+            confirmLogout();
+        });
+    }
+    private void confirmLogout(){
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Confirm Logout")
+                .setMessage("Are you sure you want to log out of the app?")
+                .setPositiveButton("Logout", (dialogInterface, i) -> logout())
+                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
+                .setCancelable(true)
+                .show();
     }
 
     private void loadUI() {
@@ -65,5 +83,16 @@ public class FragmentProfile extends Fragment {
 
     private void loadData() {
         ngo = new Gson().fromJson(context.getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE).getString("NGO", ""), NGO.class);
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = getActivity()
+                .getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+                .edit();
+        editor.remove("NGO");
+        editor.commit();
+        Toast.makeText(context, "Logout successful", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), ActivityLogin.class));
+        getActivity().finish();
     }
 }
