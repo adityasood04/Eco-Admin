@@ -152,19 +152,14 @@ public class ActivityCreateEvent extends AppCompatActivity {
             datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    Log.i("date", "onDateSet: day " + day+" year "+ year +" month "+month);
                     Calendar selectedDate = Calendar.getInstance();
                     selectedDate.set(year, month, day);
-                    Calendar currentDate = Calendar.getInstance();
-
-                    if (selectedDate.after(currentDate)) {
+                    month = month+1;
                         binding.tvSelectedTime.setTextColor(getColor(R.color.textPrimary));
                         mSelectedDate = day+"/"+month+"/"+year;
                         binding.tvSelectedDate.setText(mSelectedDate);
-                    } else {
-                        binding.tvSelectedTime.setTextColor(getColor(R.color.colorDanger));
-                        binding.tvSelectedDate.setText("Please select a valid date.");
 
-                    }
                 }
             }, year, month, dayOfMonth);
 
@@ -232,5 +227,12 @@ public class ActivityCreateEvent extends AppCompatActivity {
     }
     private void hidePb(){
         binding.pbCreateEvent.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ActivityCreateEvent.this, MainActivity.class));
+        finish();
     }
 }

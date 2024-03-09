@@ -28,15 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/llParticipants"
+        android:visibility="visible"
         android:orientation="vertical">
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/rcvParticipants"
-            tools:listitem="@layout/participants_item"
             />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnOpenCreateEvent"
+            android:id="@+id/btnWrapUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -44,10 +44,11 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:paddingVertical="8dp"
-            android:text="Assign Ecopoints"
+            android:text="Wrap up"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp" />
+
     </LinearLayout>
 
     <ProgressBar

@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +27,8 @@ public class ActivityLiveEvent extends AppCompatActivity {
     private String liveEventId = null;
 
     private Event liveEvent = null;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +37,18 @@ public class ActivityLiveEvent extends AppCompatActivity {
         liveEventId = getIntent().getStringExtra("LIVE_EVENT_ID");
         binding.rcvParticipants.setLayoutManager(new LinearLayoutManager(this));
         Log.i("live", "onCreate: "+liveEventId);
+        prefs = getSharedPreferences("EVENTS_PREFS", Context.MODE_PRIVATE);
+        editor = prefs.edit();
         if(liveEventId != null) {
             fetchParticipants();
+            binding.btnWrapUp.setOnClickListener(view -> {
+                Log.i("adi", "updateUI: wrap up called" );
+                editor.putBoolean("IS_EVENT_LIVE", false);
+                editor.putString("LIVE_EVENT_ID", null);
+                editor.apply();
+                startActivity(new Intent(ActivityLiveEvent.this,MainActivity.class));
+                finish();
+            });
         }
 
     }
@@ -50,7 +65,9 @@ public class ActivityLiveEvent extends AppCompatActivity {
                         if(task.getResult().exists()){
                             liveEvent = task.getResult().toObject(Event.class);
                             assert liveEvent != null;
-                            updateUI(liveEvent);
+                            if(!liveEvent.getRegisteredUsers().isEmpty()){
+                                updateUI(liveEvent);
+                            }
                         } else {
                             Toast.makeText(ActivityLiveEvent.this, "Some error encountered", Toast.LENGTH_SHORT).show();
                         }
@@ -72,6 +89,15 @@ public class ActivityLiveEvent extends AppCompatActivity {
         binding.llParticipants.setVisibility(View.VISIBLE);
         RegisteredUserAdapter adapter = new RegisteredUserAdapter(this, liveEvent.getRegisteredUsers());
         binding.rcvParticipants.setAdapter(adapter);
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ActivityLiveEvent.this, MainActivity.class));
+        finish();
     }
 
     private void showPb(){

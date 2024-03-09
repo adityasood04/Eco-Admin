@@ -91,6 +91,7 @@ public class FragmentHome extends Fragment {
                     Intent intent = new Intent(context, ActivityLiveEvent.class);
                     intent.putExtra("LIVE_EVENT_ID", liveEvent.getId());
                     startActivity(intent);
+                    getActivity().finish();
 
                 }
             });
