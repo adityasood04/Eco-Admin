@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,6 +90,7 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
         dialogBuilder.setView(dialogView);
         TextView tvName = dialogView.findViewById(R.id.tvSelectedName);
         EditText etEcopoints = dialogView.findViewById(R.id.etSelectedEcopoints);
+        ProgressBar pbDialog = dialogView.findViewById(R.id.pbDialog);
         AppCompatButton btnUpdate = dialogView.findViewById(R.id.btnUpdate);
 
         tvName.setText(user.getName());
@@ -107,6 +109,7 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
                 updatedUser.setEcoPoints(Integer.parseInt(etEcopoints.getText().toString()));
                 updatedUser.setName(user.getName());
                 updatedUser.setEmail(user.getEmail());
+                pbDialog.setVisibility(View.VISIBLE);
 
                 Log.i("adi", "onClick: update " + user.getId());
                 FirebaseFirestore.getInstance().collection("USERS").document(user.getId())
@@ -115,6 +118,7 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         dialog.dismiss();
+                                        pbDialog.setVisibility(View.GONE);
                                         if (task.isSuccessful())
                                             Toast.makeText(context, "Points assigned successfully", Toast.LENGTH_SHORT).show();
                                         else
@@ -125,6 +129,7 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 dialog.dismiss();
+                                                pbDialog.setVisibility(View.GONE);
                                                 Toast.makeText(context, "Some error encountered" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });

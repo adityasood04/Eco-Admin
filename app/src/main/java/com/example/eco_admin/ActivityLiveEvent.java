@@ -1,6 +1,7 @@
 package com.example.eco_admin;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -43,11 +44,7 @@ public class ActivityLiveEvent extends AppCompatActivity {
             fetchParticipants();
             binding.btnWrapUp.setOnClickListener(view -> {
                 Log.i("adi", "updateUI: wrap up called" );
-                editor.putBoolean("IS_EVENT_LIVE", false);
-                editor.putString("LIVE_EVENT_ID", null);
-                editor.apply();
-                startActivity(new Intent(ActivityLiveEvent.this,MainActivity.class));
-                finish();
+                confirmWrapup();
             });
         }
 
@@ -97,6 +94,24 @@ public class ActivityLiveEvent extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(ActivityLiveEvent.this, MainActivity.class));
+        finish();
+    }
+
+    private void confirmWrapup(){
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm wrap up")
+                .setMessage("Are you sure you want to wrap up the event?")
+                .setPositiveButton("Wrap up", (dialogInterface, i) -> wrapup())
+                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
+                .setCancelable(true)
+                .show();
+    }
+
+    private void wrapup() {
+        editor.putBoolean("IS_EVENT_LIVE", false);
+        editor.remove("LIVE_EVENT_ID");
+        editor.apply();
+        startActivity(new Intent(ActivityLiveEvent.this,MainActivity.class));
         finish();
     }
 
