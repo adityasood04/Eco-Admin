@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/llParticipant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/bg_main"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvParticipantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Aditya"
+            android:layout_weight="5"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvParticipantContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="9898898989"
+            android:layout_weight="5"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp" />
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

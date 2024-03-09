@@ -8,12 +8,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.eco_admin.ActivityCreateEvent;
+import com.example.eco_admin.ActivityLiveEvent;
 import com.example.eco_admin.R;
 import com.example.eco_admin.databinding.FragmentHomeBinding;
 import com.example.eco_admin.models.Event;
@@ -85,7 +87,11 @@ public class FragmentHome extends Fragment {
             binding.llLiveEvent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "Event is live", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(context, ActivityLiveEvent.class);
+                    intent.putExtra("LIVE_EVENT_ID", liveEvent.getId());
+                    startActivity(intent);
+
                 }
             });
         }
@@ -122,6 +128,7 @@ public class FragmentHome extends Fragment {
         prefs = context.getSharedPreferences("EVENTS_PREFS", Context.MODE_PRIVATE);
         editor = prefs.edit();
         isEventLive = prefs.getBoolean("IS_EVENT_LIVE",false);
+        Log.i("adi", "loadData: " + isEventLive);
         liveEventId = prefs.getString("LIVE_EVENT_ID", null);
         if(liveEventId != null) {
             loadEventDetails(liveEventId);

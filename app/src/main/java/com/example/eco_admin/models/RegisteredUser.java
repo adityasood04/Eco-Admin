@@ -3,7 +3,9 @@ package com.example.eco_admin.models;
 public class RegisteredUser {
     String name;
     String email;
-    long mobileNo;
+    String contact;
+    String id;
+    int ecoPoints;
 
     public RegisteredUser() {
     }
@@ -16,7 +18,6 @@ public class RegisteredUser {
         this.name = name;
     }
 
-
     public String getEmail() {
         return email;
     }
@@ -25,11 +26,27 @@ public class RegisteredUser {
         this.email = email;
     }
 
-    public long getMobileNo() {
-        return mobileNo;
+    public String getContact() {
+        return contact;
     }
 
-    public void setMobileNo(long mobileNo) {
-        this.mobileNo = mobileNo;
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getEcoPoints() {
+        return ecoPoints;
+    }
+
+    public void setEcoPoints(int ecoPoints) {
+        this.ecoPoints = ecoPoints;
     }
 }

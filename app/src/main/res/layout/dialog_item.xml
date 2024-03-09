@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_main"
+    android:padding="24dp">
+
+    <!-- EditText fields for user details -->
+    <TextView
+        android:id="@+id/tvSelectedName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:layout_marginVertical="4dp"
+        android:textSize="20sp"
+        android:textColor="@color/textPrimary"/>
+
+    <EditText
+        android:id="@+id/etSelectedEcopoints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ecopoints"
+        android:padding="12dp"
+        android:layout_marginVertical="8dp"
+        android:textSize="16sp"
+        android:textColor="@color/textPrimary"
+        android:textColorHint="@color/textSecondary"
+        android:background="@drawable/bg_border"/>
+
+    <!-- Button to update user details -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/blue_bg"/>
+
+</LinearLayout>
