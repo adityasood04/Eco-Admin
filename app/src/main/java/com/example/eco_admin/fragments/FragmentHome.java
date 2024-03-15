@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.example.eco_admin.ActivityCreateEvent;
 import com.example.eco_admin.ActivityLiveEvent;
+import com.example.eco_admin.ActivityPreviousEvents;
 import com.example.eco_admin.R;
+import com.example.eco_admin.databinding.ActivityPreviousEventsBinding;
 import com.example.eco_admin.databinding.FragmentHomeBinding;
 import com.example.eco_admin.models.Event;
 import com.example.eco_admin.models.NGO;
@@ -75,6 +77,12 @@ public class FragmentHome extends Fragment {
             } else {
                 Toast.makeText(context, "A event already in progress. Finish that before creating new event.", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        binding.btnPastEvents.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ActivityPreviousEvents.class);
+            intent.putExtra("NGO_ID", ngo.getUid());
+            startActivity(intent);
         });
     }
 
