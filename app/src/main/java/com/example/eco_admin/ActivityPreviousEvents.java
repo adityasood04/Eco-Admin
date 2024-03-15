@@ -50,7 +50,11 @@ public class ActivityPreviousEvents extends AppCompatActivity {
 
                         if(task.isSuccessful()){
                             ngo = task.getResult().toObject(NGO.class);
-                            setUI(ngo);
+                            if(ngo.getPreviousEvents().size() != 0)
+                                setUI(ngo);
+                            else {
+                                binding.tvNoEvents.setVisibility(View.VISIBLE);
+                            }
                         } else {
                             Toast.makeText(ActivityPreviousEvents.this, "Error loading events. Try again!!", Toast.LENGTH_SHORT).show();
                             finish();
@@ -61,7 +65,6 @@ public class ActivityPreviousEvents extends AppCompatActivity {
     }
 
     private void setUI(NGO ngo) {
-        binding.tvNoEvents.setVisibility(View.GONE);
         binding.llPreviousEvents.setVisibility(View.VISIBLE);
         binding.rcvPastEvents.setLayoutManager(new LinearLayoutManager(this));
         PastEventsAdapter adapter = new PastEventsAdapter(this,ngo.getPreviousEvents());
