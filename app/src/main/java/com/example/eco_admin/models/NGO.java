@@ -10,7 +10,7 @@ public class NGO {
     long contactNo;
     String website;
     String email;
-    ArrayList<Event> previousEvents;
+    ArrayList<PreviousEvent> previousEvents;
     public NGO() {
     }
 
@@ -22,11 +22,11 @@ public class NGO {
         this.uid = uid;
     }
 
-    public ArrayList<Event> getPreviousEvents() {
+    public ArrayList<PreviousEvent> getPreviousEvents() {
         return previousEvents;
     }
 
-    public void setPreviousEvents(ArrayList<Event> previousEvents) {
+    public void setPreviousEvents(ArrayList<PreviousEvent> previousEvents) {
         this.previousEvents = previousEvents;
     }
 

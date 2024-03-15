@@ -17,6 +17,7 @@ import com.example.eco_admin.adapters.RegisteredUserAdapter;
 import com.example.eco_admin.databinding.ActivityLiveEventBinding;
 import com.example.eco_admin.models.Event;
 import com.example.eco_admin.models.NGO;
+import com.example.eco_admin.models.PreviousEvent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +34,7 @@ public class ActivityLiveEvent extends AppCompatActivity {
     private String liveEventId = null;
 
     private Event liveEvent = null;
+    private PreviousEvent previousEvent = null;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
     private  NGO mNGO;
@@ -123,7 +125,15 @@ public class ActivityLiveEvent extends AppCompatActivity {
         String ngoData= getSharedPreferences("APP_PREFS",Context.MODE_PRIVATE).getString("NGO","");
         mNGO = new Gson().fromJson(ngoData, NGO.class);
         Log.i("live", "saveEventToDB: " + mNGO.getUid());
-
+        if(previousEvent == null) previousEvent = new PreviousEvent();
+        previousEvent.setName(liveEvent.getName());
+        previousEvent.setDescription(liveEvent.getDescription());
+        previousEvent.setId(liveEvent.getId());
+        previousEvent.setLocation(liveEvent.getLocation());
+        previousEvent.setDate(liveEvent.getDate());
+        previousEvent.setTime(liveEvent.getTime());
+        previousEvent.setType(liveEvent.getType());
+        previousEvent.setNoOfParticipants(liveEvent.getRegisteredUsers().size());
 
 
         FirebaseFirestore.getInstance().collection("NGO-Data")
@@ -147,7 +157,7 @@ public class ActivityLiveEvent extends AppCompatActivity {
 
 
                                 }
-                                mNGO.getPreviousEvents().add(liveEvent);
+                                mNGO.getPreviousEvents().add(previousEvent);
 
                                 FirebaseFirestore.getInstance().collection("NGO-Data")
                                         .document(mNGO.getUid())
