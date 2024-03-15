@@ -57,6 +57,7 @@ public class ActivityLiveEvent extends AppCompatActivity {
             });
         }
 
+        binding.ivBackBtn.setOnClickListener(view -> onBackPressed());
     }
 
     private void fetchParticipants() {

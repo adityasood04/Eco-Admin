@@ -13,7 +13,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:text="Hello,"
         android:textColor="@color/textPrimary"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvOrgName"
@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/bg_tert"
         android:paddingHorizontal="8dp"
         android:paddingVertical="16dp"
         android:visibility="visible">
@@ -56,8 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/bg_sec"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/bg_border"
             android:orientation="vertical">
 
             <TextView
