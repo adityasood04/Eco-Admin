@@ -35,8 +35,8 @@
                 >
 
                 <ImageView
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/dp"
                     android:id="@+id/profileDPImg" />
 
@@ -94,7 +94,7 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:textSize="16sp"
                 android:textColor="@color/textPrimary"
-                android:text="Name here" />
+                android:text="" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:textSize="16sp"
                 android:textColor="@color/textPrimary"
-                android:text="Name here" />
+                android:text="" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:textSize="16sp"
                 android:textColor="@color/textPrimary"
-                android:text="Name here" />
+                android:text="" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Name here"
+                android:text=""
                 android:textColor="@color/textPrimary"
                 android:textSize="16sp" />
 

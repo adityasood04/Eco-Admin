@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/llParticipant"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_tert"
     android:layout_marginBottom="8dp">
     <LinearLayout
         android:visibility="visible"
-        android:id="@+id/llParticipant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:background="@drawable/bg_tert"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
@@ -29,7 +31,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:text="9898898989"
             android:layout_weight="5"
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/textSecondary"
             android:textSize="14sp" />
 
 
@@ -37,5 +39,12 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:padding="16dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/assign"
+        />
 
 </LinearLayout>

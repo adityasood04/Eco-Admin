@@ -60,7 +60,6 @@ public class ActivityCreateEvent extends AppCompatActivity {
         ngo = new Gson().fromJson(getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE).getString("NGO", ""), NGO.class);
         prefs = getSharedPreferences("EVENTS_PREFS", Context.MODE_PRIVATE);
         editor = prefs.edit();
-        //TODO : If ngo is null logout
         if(getIntent().getStringExtra("EVENTS_LIST") != null){
             eventsList = new Gson().fromJson(getIntent().getStringExtra("EVENTS_LIST"),NGOEvents.class);
         } else {
@@ -70,6 +69,7 @@ public class ActivityCreateEvent extends AppCompatActivity {
         setupDatePicker();
         setupTimePicker();
 
+        binding.ivBackBtn.setOnClickListener(view -> onBackPressed());
         binding.btnCreateEvent.setOnClickListener(view -> {
 
             if (binding.etNameOfEvent.getText().toString().isEmpty() || binding.etNameOfEvent.getText().toString().equals("")) {

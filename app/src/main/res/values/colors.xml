@@ -4,9 +4,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_blue">#164863</color>
     <color name="light_blue">#DDF2FD</color>
-    <color name="colorSecondary">#F5F8FA</color>
+    <color name="colorSecondary">#FBFBFB</color>
     <color name="textPrimary">#000000</color>
-    <color name="textSecondary">#3C3C3C</color>
+    <color name="textSecondary">#5E5C5C</color>
     <color name="colorDanger">#FF0000</color>
 
     <color name="colorBackground">#f1efee</color>

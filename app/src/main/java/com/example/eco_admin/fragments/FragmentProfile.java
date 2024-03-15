@@ -6,17 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.example.eco_admin.ActivityLogin;
-import com.example.eco_admin.R;
 import com.example.eco_admin.databinding.FragmentProfileBinding;
 import com.example.eco_admin.models.NGO;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -62,7 +60,8 @@ public class FragmentProfile extends Fragment {
             confirmLogout();
         });
     }
-    private void confirmLogout(){
+
+    private void confirmLogout() {
         new AlertDialog.Builder(getActivity())
                 .setTitle("Confirm Logout")
                 .setMessage("Are you sure you want to log out of the app?")
@@ -90,7 +89,13 @@ public class FragmentProfile extends Fragment {
                 .getSharedPreferences("APP_PREFS", MODE_PRIVATE)
                 .edit();
         editor.remove("NGO");
-        editor.commit();
+        editor.apply();
+        SharedPreferences.Editor editor2 = getActivity()
+                .getSharedPreferences("EVENTS_PREFS", MODE_PRIVATE)
+                .edit();
+        editor2.putBoolean("IS_EVENT_LIVE", false);
+        editor2.remove("LIVE_EVENT_ID");
+        editor2.apply();
         Toast.makeText(context, "Logout successful", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getActivity(), ActivityLogin.class));
         getActivity().finish();

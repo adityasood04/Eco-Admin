@@ -141,6 +141,19 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPastEvents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/blue_bg"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:paddingVertical="8dp"
+        android:text="Previous Events"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOpenCreateEvent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

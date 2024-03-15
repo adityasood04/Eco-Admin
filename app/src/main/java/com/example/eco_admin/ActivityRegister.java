@@ -86,6 +86,7 @@ public class ActivityRegister extends AppCompatActivity {
         ngo.setContactNo(Long.parseLong(binding.etContactNo.getText().toString()));
         ngo.setWebsite(binding.etWebsite.getText().toString());
         ngo.setEmail(binding.etEmail.getText().toString());
+        ngo.setUid(task.getResult().getUser().getUid());
 
         db.collection("NGO-Data").document(task.getResult().getUser().getUid())
                 .set(ngo)

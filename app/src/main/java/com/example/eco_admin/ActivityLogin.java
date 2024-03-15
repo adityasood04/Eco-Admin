@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class ActivityLogin extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         prefs = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE);
         editor = prefs.edit();
@@ -91,7 +93,8 @@ public class ActivityLogin extends AppCompatActivity {
 
     }
     private void getUserDetails(AuthResult result) {
-        db.collection("Admins").document(result.getUser().getUid()).get()
+        Log.i("login", "getUserDetails: " + result.getUser().getUid());
+        db.collection("NGO-Data").document(result.getUser().getUid()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {

@@ -16,11 +16,16 @@ import android.widget.Toast;
 import com.example.eco_admin.adapters.RegisteredUserAdapter;
 import com.example.eco_admin.databinding.ActivityLiveEventBinding;
 import com.example.eco_admin.models.Event;
+import com.example.eco_admin.models.NGO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class ActivityLiveEvent extends AppCompatActivity {
 
@@ -30,6 +35,8 @@ public class ActivityLiveEvent extends AppCompatActivity {
     private Event liveEvent = null;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
+    private  NGO mNGO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +88,7 @@ public class ActivityLiveEvent extends AppCompatActivity {
     }
 
     private void updateUI(Event liveEvent) {
+        binding.tvEventName.setText(liveEvent.getName().toString());
         Log.i("live", "updateUI: called and name is " + liveEvent.getName());
         binding.tvNoParticipants.setVisibility(View.GONE);
         binding.llParticipants.setVisibility(View.VISIBLE);
@@ -108,11 +116,78 @@ public class ActivityLiveEvent extends AppCompatActivity {
     }
 
     private void wrapup() {
-        editor.putBoolean("IS_EVENT_LIVE", false);
-        editor.remove("LIVE_EVENT_ID");
-        editor.apply();
-        startActivity(new Intent(ActivityLiveEvent.this,MainActivity.class));
-        finish();
+        saveEventToDB();
+    }
+
+    private void saveEventToDB() {
+        String ngoData= getSharedPreferences("APP_PREFS",Context.MODE_PRIVATE).getString("NGO","");
+        mNGO = new Gson().fromJson(ngoData, NGO.class);
+        Log.i("live", "saveEventToDB: " + mNGO.getUid());
+
+
+
+        FirebaseFirestore.getInstance().collection("NGO-Data")
+                .document(mNGO.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        Log.i("live", "saveEventToDB:1 " + task.getResult() );
+
+                        if(task.isSuccessful()){
+                            mNGO = task.getResult().toObject(NGO.class);
+                            Log.i("live", "saveEventToDB:1.5 mngo is " + mNGO.getName());
+
+                            if(mNGO != null) {
+                                Log.i("live", "saveEventToDB:2 task success and mngo not null " + mNGO.getName());
+
+                                if(mNGO.getPreviousEvents() == null || mNGO.getPreviousEvents().isEmpty()){
+                                    mNGO.setPreviousEvents(new ArrayList<>());
+                                    Log.i("live", "saveEventToDB:3 events empty");
+
+
+                                }
+                                mNGO.getPreviousEvents().add(liveEvent);
+
+                                FirebaseFirestore.getInstance().collection("NGO-Data")
+                                        .document(mNGO.getUid())
+                                        .set(mNGO)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                editor.putBoolean("IS_EVENT_LIVE", false);
+                                                editor.remove("LIVE_EVENT_ID");
+                                                editor.apply();
+                                                startActivity(new Intent(ActivityLiveEvent.this,MainActivity.class));
+                                                finish();
+
+                                                Toast.makeText(ActivityLiveEvent.this, "Event wrapped up!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(ActivityLiveEvent.this, "Some error encountered"+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                            }
+                            else {
+                                Log.i("live", "saveEventToDB:1.5 ngo null" + task.getResult());
+
+                            }
+                        } else {
+                            Toast.makeText(ActivityLiveEvent.this, "Some error encountered", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ActivityLiveEvent.this, "Some error encountered" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
     }
 
     private void showPb(){

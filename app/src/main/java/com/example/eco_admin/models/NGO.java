@@ -1,12 +1,34 @@
 package com.example.eco_admin.models;
 
+import java.util.ArrayList;
+
 public class NGO {
+    String uid;
     String name;
     String registrationNo;
     String address;
     long contactNo;
     String website;
     String email;
+    ArrayList<Event> previousEvents;
+    public NGO() {
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public ArrayList<Event> getPreviousEvents() {
+        return previousEvents;
+    }
+
+    public void setPreviousEvents(ArrayList<Event> previousEvents) {
+        this.previousEvents = previousEvents;
+    }
 
     public String getEmail() {
         return email;
@@ -14,9 +36,6 @@ public class NGO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public NGO() {
     }
 
     public String getName() {
